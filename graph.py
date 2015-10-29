@@ -5,12 +5,31 @@ __author__ = 'Damian'
 
 import numpy as np
 import random as rnd
+import networkx as nx
+import matplotlib.pyplot as plt
 from brute import *
 
 class Graph:
     def __init__(self, size):
         self.size = size
         self.matrix = np.zeros((size,size))
+
+    def plot(self):
+        G = nx.Graph(self.matrix)
+        pos = nx.spring_layout(G)
+
+        labels={}
+        for i in range(0,self.size):
+            num = 0 + i
+            labels[i] = r'$'+str(num)+'$'
+
+        nx.draw_networkx_nodes(G, pos, node_color='y', node_size=1000, alpha=0.7)
+        nx.draw_networkx_labels(G,pos,labels,font_size=16)
+        nx.draw_networkx_edges(G,pos,width=1.0,alpha=0.9, edge_color='g')
+
+
+        plt.show()
+
 
     def fill(self, saturation = 0.5): #domyślne nasycenie 50%
         n = self.size
@@ -56,4 +75,5 @@ for c in colorings:
     if graph.check_coloring(c):
         print(c)
         break
+graph.plot()
 
