@@ -22,6 +22,6 @@ class Brute:
 
     def range(self):
         numbers = [self.first()]
-        for i in range(1,self.digits**self.bound):
+        for i in range(1,self.bound**self.digits):
             numbers.append(self.increment(numbers[-1]))
         return numbers

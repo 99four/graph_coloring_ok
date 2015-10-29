@@ -31,7 +31,7 @@ class Graph:
         plt.show()
 
 
-    def fill(self, saturation = 1): #domyślne nasycenie 50%
+    def fill(self, saturation = 0.3): #domyślne nasycenie 50%
         n = self.size
         p = n * (n-1) * saturation
         self.matrix = np.zeros((n,n))
@@ -60,20 +60,30 @@ class Graph:
                     return False
         return True
 
-#testowe kolorowanie
-graph = Graph(7)
+
+v = 7 #liczba wierzcholkow
+
+graph = Graph(v)
 graph.fill()
+found_solution = False
 
-#generowanie kolorowan
-brute = Brute(7,5) #graf 5 wierzcholkow, 4 kolory
-colorings = brute.range()
 
-print (graph.matrix)
-print ()
+for i in range(0,v+1):
+    if found_solution: break
+    b = Brute(v,i)
+    colorings = b.range()
+    for c in colorings:
+        if graph.check_coloring(c):
+            print('Znalazlem! ' + str(c) + ' liczba chromatyczna wynosi ' + str(i))
+            found_solution = True
+            break
+#graph.plot()
 
-for c in colorings:
-    if graph.check_coloring(c):
-        print('Znalazlem! ' + str(c))
-        break
-graph.plot()
+# for i in range(0,3):
+#     brutes[i] = Brute(v,i)
+#     print (brutes[i].first())
+#     colorings[i] = brutes[i].range()
+#     print (colorings[i])
+
+
 
