@@ -16,14 +16,14 @@ class Graph:
 
     def plot(self):
         G = nx.Graph(self.matrix)
-        pos = nx.spring_layout(G)
+        pos = nx.spring_layout(G) #po co to?
 
         labels={}
         for i in range(0,self.size):
-            num = 0 + i
+            num = i
             labels[i] = r'$'+str(num)+'$'
 
-        nx.draw_networkx_nodes(G, pos, node_color='y', node_size=1000, alpha=0.7)
+        nx.draw_networkx_nodes(G, pos, node_color='y', alpha=0.7, node_size=1000) #kolejnosc nie ma znaczenia?
         nx.draw_networkx_labels(G,pos,labels,font_size=16)
         nx.draw_networkx_edges(G,pos,width=1.0,alpha=0.9, edge_color='g')
 
@@ -31,7 +31,7 @@ class Graph:
         plt.show()
 
 
-    def fill(self, saturation = 0.5): #domyślne nasycenie 50%
+    def fill(self, saturation = 1): #domyślne nasycenie 50%
         n = self.size
         p = n * (n-1) * saturation
         self.matrix = np.zeros((n,n))
@@ -61,11 +61,11 @@ class Graph:
         return True
 
 #testowe kolorowanie
-graph = Graph(5)
+graph = Graph(7)
 graph.fill()
 
 #generowanie kolorowan
-brute = Brute(5,4) #graf 5 wierzcholkow, 4 kolory
+brute = Brute(7,5) #graf 5 wierzcholkow, 4 kolory
 colorings = brute.range()
 
 print (graph.matrix)
@@ -73,7 +73,7 @@ print ()
 
 for c in colorings:
     if graph.check_coloring(c):
-        print(c)
+        print('Znalazlem! ' + str(c))
         break
 graph.plot()
 
