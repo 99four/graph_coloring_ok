@@ -16,30 +16,33 @@ class Graph:
         self.size = size
         self.matrix = np.zeros((size,size))
 
-    def plot(self):
+    def plot(self, coloring=None):
         G = nx.Graph(self.matrix)
         pos = nx.spring_layout(G) #po co to?
-
-        #obsluga kolorow
-        color_list = []
-        for x in self.coloring:
-            color_list.append(color_scheme[x])
-
 
         labels={}
         for i in range(0,self.size):
             num = i
             labels[i] = r'$'+str(num)+'$'
 
+        #obsluga kolorow
+        if coloring is None:
+            colors_to_use = self.coloring
+        else:
+            colors_to_use = coloring
+
+        color_list = []
+        for x in colors_to_use:
+            color_list.append(color_scheme[x])
+
         nx.draw_networkx_nodes(G, pos, node_color=color_list, alpha=0.7, node_size=1000) #kolejnosc nie ma znaczenia?
         nx.draw_networkx_labels(G,pos,labels,font_size=16)
         nx.draw_networkx_edges(G,pos,width=1.0,alpha=0.9, edge_color='g')
 
-
         plt.show()
 
 
-    def fill(self, saturation = 0.8): #domyślne nasycenie 50%
+    def fill(self, saturation = 0.6): #domyślne nasycenie 50%
         n = self.size
         p = n * (n-1) * saturation
         self.matrix = np.zeros((n,n))
@@ -69,30 +72,26 @@ class Graph:
         self.coloring = coloring
         return True
 
-
-v = 7 #liczba wierzcholkow
+v = 5 #liczba wierzcholkow
 
 graph = Graph(v)
 graph.fill()
-found_solution = False
 
 
-for i in range(0,v+1):
-    if found_solution: break
-    b = Brute(v,i)
-    colorings = b.range()
-    for c in colorings:
-        if graph.check_coloring(c):
-            print('Znalazlem! ' + str(c) + ' liczba chromatyczna grafu wynosi ' + str(i))
-            found_solution = True
-            break
-graph.plot()
+def bruteForceAlgo():
+    found_solution = False
+    for i in range(0,v+1):
+        if found_solution: break
+        b = Brute(v,i)
+        colorings = b.range()
+        for c in colorings:
+            if graph.check_coloring(c):
+                print('Znalazlem! ' + str(c) + ' liczba chromatyczna grafu wynosi ' + str(i))
+                found_solution = True
+                break
 
-# for i in range(0,3):
-#     brutes[i] = Brute(v,i)
-#     print (brutes[i].first())
-#     colorings[i] = brutes[i].range()
-#     print (colorings[i])
+def greedyAlgo():
+    pass
 
-
-
+bruteForceAlgo()
+#graph.plot()
