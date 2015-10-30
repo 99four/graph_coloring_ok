@@ -8,4 +8,5 @@ class Greedy:
     def __init__(self):
         self.coloring = [None] * 5
 
-g1 = Greedy()
+    def first(self):
+        self.coloring[0] = 0

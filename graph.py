@@ -77,7 +77,6 @@ v = 5 #liczba wierzcholkow
 graph = Graph(v)
 graph.fill()
 
-
 def bruteForceAlgo():
     found_solution = False
     for i in range(0,v+1):
@@ -90,8 +89,30 @@ def bruteForceAlgo():
                 found_solution = True
                 break
 
-def greedyAlgo():
-    pass
+bfs_result = []
+queue = []
 
-bruteForceAlgo()
-#graph.plot()
+
+def bfs(start):
+    bfs_result.append(start)
+    neighbours = graph.return_neighbour(start)
+    for n in neighbours:
+        bfs_result.append(n)
+        queue.append(n)
+    print ('poczatek neighbours: ' + str(neighbours))
+    print ('poczatek queue: ' + str(queue) + '\n')
+
+    while queue:
+        neighbours = graph.return_neighbour(queue[0])
+        del queue[0]
+        print ('nowi sasiedzi: ' + str(neighbours))
+        for n in neighbours:
+            if n not in bfs_result:
+                bfs_result.append(n)
+                queue.append(n)
+
+bfs(0)
+print ('wynik bfs to: ' + str(bfs_result))
+
+#bruteForceAlgo()
+graph.plot([0,1,2,3,4])
