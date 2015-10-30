@@ -72,7 +72,7 @@ class Graph:
         self.coloring = coloring
         return True
 
-v = 5 #liczba wierzcholkow
+v = 7 #liczba wierzcholkow
 
 graph = Graph(v)
 graph.fill()
@@ -104,14 +104,16 @@ def bfs(start):
 
     while queue:
         neighbours = graph.return_neighbour(queue[0])
+        print ('kolejka: ' + str(queue))
+        print ('sasiedzi wierzcholka : ' + str(queue[0]) + ': ' + str(neighbours))
         del queue[0]
-        print ('nowi sasiedzi: ' + str(neighbours))
         for n in neighbours:
             if n not in bfs_result:
+                print ('dodalem rozwiazanie ' + str(n))
                 bfs_result.append(n)
                 queue.append(n)
 
-bfs(0)
+bfs(4)
 print ('wynik bfs to: ' + str(bfs_result))
 
 #bruteForceAlgo()
