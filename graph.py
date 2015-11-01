@@ -72,7 +72,7 @@ class Graph:
         self.coloring = coloring
         return True
 
-v = 7 #liczba wierzcholkow
+v = 5 #liczba wierzcholkow
 
 graph = Graph(v)
 graph.fill()
@@ -99,22 +99,42 @@ def bfs(start):
     for n in neighbours:
         bfs_result.append(n)
         queue.append(n)
-    print ('poczatek neighbours: ' + str(neighbours))
-    print ('poczatek queue: ' + str(queue) + '\n')
+    #print ('poczatek neighbours: ' + str(neighbours))
+    #print ('poczatek queue: ' + str(queue) + '\n')
 
     while queue:
         neighbours = graph.return_neighbour(queue[0])
-        print ('kolejka: ' + str(queue))
-        print ('sasiedzi wierzcholka : ' + str(queue[0]) + ': ' + str(neighbours))
+        #print ('kolejka: ' + str(queue))
+        #print ('sasiedzi wierzcholka : ' + str(queue[0]) + ': ' + str(neighbours))
         del queue[0]
         for n in neighbours:
             if n not in bfs_result:
-                print ('dodalem rozwiazanie ' + str(n))
+                #print ('dodalem rozwiazanie ' + str(n))
                 bfs_result.append(n)
                 queue.append(n)
 
-bfs(4)
+bfs(0)
 print ('wynik bfs to: ' + str(bfs_result))
+print (len(bfs_result))
 
+coloring = [-1] * v
+def greedyColoring():
+    coloring[bfs_result[0]] = 0
+
+    for i in range(1,len(bfs_result)):
+        neighbours = graph.return_neighbour(bfs_result[i])
+
+        neigh_colorings = []
+        for k in neighbours:
+            neigh_colorings.append(coloring[k])
+        max_neigh_color = max(neigh_colorings)
+        print (max_neigh_color)
+        neigh_colorings.clear()
+
+        coloring[bfs_result[i]] = max_neigh_color + 1
+    print (coloring)
+
+
+greedyColoring()
 #bruteForceAlgo()
-graph.plot([0,1,2,3,4])
+graph.plot(coloring)
