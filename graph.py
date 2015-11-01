@@ -113,8 +113,9 @@ def bruteForceAlgo():
                 found_solution = True
                 return c
 
-coloring = [-1] * v
+
 def greedyColoring():
+    coloring = [-1] * v
     graph.bfs(0)
     print ('wynik bfs to: ' + str(graph.bfs_result))
     coloring[graph.bfs_result[0]] = 0
@@ -137,7 +138,7 @@ def greedyColoring():
     print ('kolorowanie ' + str(coloring))
     return coloring
 
-cx = greedyColoring()
-#cx = bruteForceAlgo()
+coloring = greedyColoring()
+#coloring = bruteForceAlgo()
 
-graph.plot(cx)
+graph.plot(coloring)
