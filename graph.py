@@ -126,9 +126,13 @@ def greedyColoring():
         for k in neighbours:
             neigh_colorings.append(coloring[k])
         max_neigh_color = max(neigh_colorings)
-        neigh_colorings.clear()
+        #neigh_colorings.clear()
 
-        coloring[graph.bfs_result[i]] = max_neigh_color + 1
+        #coloring[graph.bfs_result[i]] = max_neigh_color + 1
+        for j in range(0,max_neigh_color+2):
+            if j not in neigh_colorings:
+                coloring[graph.bfs_result[i]] = j
+        neigh_colorings.clear()
     print ('kolorowanie ' + str(coloring))
 
 greedyColoring()
