@@ -96,7 +96,7 @@ class Graph:
         self.bfs_result = bfs_result
 
 
-v = 7 #liczba wierzcholkow
+v = 8 #liczba wierzcholkow
 
 graph = Graph(v)
 graph.fill()
@@ -111,7 +111,7 @@ def bruteForceAlgo():
             if graph.check_coloring(c):
                 print('Znalazlem! ' + str(c) + ' liczba chromatyczna grafu wynosi ' + str(i))
                 found_solution = True
-                break
+                return c
 
 coloring = [-1] * v
 def greedyColoring():
@@ -132,10 +132,12 @@ def greedyColoring():
         for j in range(0,max_neigh_color+2):
             if j not in neigh_colorings:
                 coloring[graph.bfs_result[i]] = j
+                break
         neigh_colorings.clear()
     print ('kolorowanie ' + str(coloring))
+    return coloring
 
-greedyColoring()
-#bruteForceAlgo()
+cx = greedyColoring()
+#cx = bruteForceAlgo()
 
-graph.plot(coloring)
+graph.plot(cx)
